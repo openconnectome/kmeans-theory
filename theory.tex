@@ -1,0 +1,66 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amssymb}
+\usepackage{bm}
+
+
+\title{Proof that the Bayesian Information Criterion is "unimodal" for a Gaussian mixture model}
+\author{Ron Boger}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+In applications of clustering, we often seek to best fit a model to data, but do not have prior knowledge of the number of clusters. Currently, the technique to find the best number of clusters to use is to test a model at all relevant cluster sizes; however, given the prevalence of enormous data sets this method can prove to be extremely inefficient and costly. In this proof, we present an insight on how to find the optimal number of clusters to use when for a more general case of the k-means problem - fitting k parameters to a Gaussian mixture model.\\
+
+The Bayesian Information Criterion (BIC) is a model selection tool. BIC can be informally defined as \(BIC = penalty - fit\). Logically as we increase the numbers of parameters to be estimated, our fit improves, but the penalty worsens. We seek to minimize the BIC with respect to the number of parameters we estimate.\\
+
+We begin the proof by providing important definitions and lemmas to aid in the readers' understanding.\\
+
+\textbf{Definition 1.1}: The BIC (Bayesian Information Criterion) is formally defined as the following:\\
+\(BIC = -2ln(\hat{L}) + k(ln(n) - ln(2 \times \pi))\), where:\\
+\(\hat{L}\) denotes the maximized value of the likelihood function for a model \(M\), that is, \(\hat{L} = p(x|\hat{\theta}, M)\).\\
+\(\theta\) denotes a vector of the parameters of the model, and \(\hat{\theta}\) is the estimator for \(\theta\)\\
+\(k\) denotes the number of parameters to be estimated, \(k \in \mathbb{R}^{+}\)\\
+\(x\) is the observed data.\\
+\(n\) is the number of data points in \(x\).\\
+
+\textbf{Definition 1.2}: We consider a less traditional definition for the term \textbf{unimodal}. A function \(f(x)\) is considered to be unimodal if all local extrema of the function are absolute extrema of the function. More formally, this is:\\
+- For \(f(x) \in \mathbb{R}\), if \(f'(x = x^{*}) = 0\), \(f''(x= x^{*}) <0\), then \(\max_{x} f(x) = f(x = x^{*})\)
+- Similarly, for \(f(x) \in \mathbb{R}\), if \(f'(x = x^{*}) = 0\), \(f''(x= x^{*}) > 0\), then \(\min_{x} f(x) = f(x = x^{*})\)
+
+\textbf{Definition 1.3}: A Gaussian mixture distribution can be written as follows:\\ \(p(x) = \sum_{i=1}^{k} \pi_i N(x | \mu_i, \sigma_i)\), where \\
+
+\(0 \leq \pi_i \leq 1\), \(\sum_{i=1}^k \pi_i\)\\
+\(N(x | \mu_i, \sigma_i)\) is a normal distribution (\(N(x) = \frac{1}{\sigma \sqrt{2\pi}} e^{ - \frac{(x - \mu)^2}{2\sigma^2}}\)) with mean \(u_i\) and variance \(\sigma_i\)\\
+
+We provide more background on Gaussian mixture models:\\
+
+Suppose we introduce \(z = \{z_1, ... z_k\} \), where \(z_i\) is a Bernouli random variable such that\\ \(z_i = 1\) with \(P(z_i) = \pi_i\) and \(z_i = 0\) otherwise. We use \(z_i\) to "single out" the \(i^{th}\) \(N(x | \mu_i, \sigma_i)\). Because \(\bm{z}\) is only equal to \(1\) for one value in \([k]\), we can write \(p(z) = \prod_{i=1}^k \pi_i^{z_i}\),
+\(p(x | z_i = 1 ) = N(x | \mu_i, \sigma_i) = \prod_{i=1}^k N(x | \mu_i, \sigma_i)^{z_i}\)
+and clearly \(p(x) = \sum_z p(z) p(x | z) = \sum_{i=1}^k \pi_i N(x | \mu_i, \sigma_i)\)
+
+Furthermore, let us define the \textbf{responsibility} of \(z_i\) as \(\gamma(z_i) = \gamma(z_i = 1 | k) = \frac{p(z_i = 1)p(x| z_i = 1)}{ \sum_{j=1}^k p(z_j = 1) p(x | z_j = 1) } = \frac{\pi_i N(x | \mu_i, \sigma_i)}{\sum_{j=1}^k \pi_j N(x | \mu_j, \sigma_j)}\) by Bayes' theorem.\\
+
+\textbf{Definition 1.4}: Given \(\{\bm{x_1}, \dots, \bm{x_n} \} = {X}\), where \({X}\) is independently and identically distributed, we define the \textbf{likelihood function} \(L\) of \({X}\), \(L = p( X | \pi, \mu, k) = \prod_{j=1}^n \sum_{i=1}^k \pi_i N(x_j | \mu_i, \sigma_i)\), and \(ln(L) = \sum_{j=1}^n ln (\sum \pi_i N(x_j | \mu_i, \sigma_i) )\). We can maximize \(L\) with respect to different parameters to attain \(\hat{L}\), the \textbf{maximum-likelihood estimation (MLE)}. \\Note that there is no closed form solution for the MLE of of a  GMM.
+
+\textbf{Proof 1.1}: \(\hat{L}(k = c+1) \geq \hat{L}(k = c) \forall c\geq 0\), where \(k\) again is the number of parameters to be estimated.
+We first seek to prove that \(GMM_k \subset GMM_{k+1}\), where  \(GMM_i\) is the set of all Gaussian mixture models with \(i\) Gaussians mixed. (Perhaps this part should be a lemma) Note that:\\
+\(GMM_1  = \{P_{\theta} : P_{\theta}(x) = \frac{1}{\sigma \sqrt{2\pi}} e^{ - \frac{(x - \mu)^2}{2\sigma^2}} \}, \mu \in \mathbb{R}, \sigma \in \mathbb{R}^+\)\\
+\(GMM_2 = \{P_{\theta} : P_{\theta}(x) = \pi_1 \frac{1}{\sigma_1 \sqrt{2\pi}} e^{ - \frac{(x - \mu_1)^2}{2\sigma_1^2}} + \pi_2 \frac{1}{\sigma_2 \sqrt{2\pi}} e^{ - \frac{(x - \mu_2)^2}{2\sigma_2^2}} \}, \mu_1, \mu_2 \in \mathbb{R}, \sigma_1, \sigma_2 \in \mathbb{R}^+ , 0 \leq \pi_1, \pi_2 \leq 1, \pi_1 + \pi_2 = 1\)\\
+and, 
+\(GMM_k = \{P_{\theta} : P_{\theta}(x) = \sum_{i=1}^k \pi_i \frac{1}{\sigma_i \sqrt{2\pi}} e^{ - \frac{(x - \mu_i)^2}{2\sigma_i^2}}  \}, \mu_i \in \mathbb{R}, \sigma_i \in \mathbb{R}^+ , 0 \leq \pi_i \leq 1\forall i, \sum_{i=1}^k \pi_i = 1\)\\
+
+Examining this more careful definition of the set of all k-Gaussian Mixture Models, we see can "recover" \(GMM_k\) from \(GMM_{k+1}\)by setting \(\pi_{k+1} = 0\), and \(\pi_{i, GMM_{k+1}} = \pi_{i, GMM_k}\), so \(GMM_k \subset GMM_{k+1} \forall k \geq 0\). Clearly the reverse direction is not true.
+
+For any 2 events \(A, B\) in a sample space \(S\), if \(A \subset B\), \(Pr(B) \geq Pr(A)\). For our Gaussian Mixture Model, we can use this fact and our previous definition of the set of all \(k\)-Gaussian Mixture Models \(P(GMM_{k+1} | x) =  \sum_{i=1}^{k+1} \pi_i N(x | \mu_i, \sigma_i) \geq P(GMM_{k}  =  \sum_{i=1}^k \pi_i N(x | \mu_i, \sigma_i)\). Since \(ln\) is a monotonically increasing function,  \(ln(\sum_{i=1}^{k+1} \pi_i N(x | \mu_i, \sigma_i)) \geq  ln(\sum_{i=1}^k \pi_i N(x | \mu_i, \sigma_i))\), \\
+ \( \sum_{j=1}^n ln (\sum_{i=1}^{k+1} \pi_i N(x_j | \mu_i, \sigma_i) )\geq  \sum_{j=1}^n ln (\sum_{i=1}^{k} \pi_i N(x_j | \mu_i, \sigma_i) )\) so \(\hat{L}(k = c+1) \geq \hat{L}(k = c) \forall c\geq 1 \)\\
+ 
+ \textbf{Proof 1.2:} It is sufficient (not sure yet that it's necessary, more to come :) ) to show that \(\hat{L}(k = c+2) - \hat{L}(k = c +1) \leq \hat{L}(k = c+1) - \hat{L}(k = c) \forall c \geq 1\) in order for the \(BIC\) to be unimodal for a Gaussian Mixture Model. This means the maximum likelihood function is in the discrete sense, concave down. \\
+
+Let us recall our prior definition of the Bayesian Information Criterion,  \(BIC = -fit + penality = -2ln(\hat{L}) + k(ln(n) - ln(2 \times\pi))\). Suppose that \(\hat{L}(k = c+2) - \hat{L}(k = c +1) \leq \hat{L}(k = c+1) - \hat{L}(k = c) < \infty \forall c \geq 0\).  \\Then since our \(penalty = k*(ln(n) - ln(2\pi))\)increases linearly as a function of \(k\). we can find a \(k^* < \infty\) s.t. \(k*(ln(n) - ln(2\pi)) \geq \hat{L}(k=2) - \hat{L}(k=1) \geq \hat{L}(k=k^*) - \hat{L}(k=k^* - 1) \forall k > k^*\geq 1\). \\Therefore, since \(ln(\hat{L})\) (and trivially our penalty) is a monotonically increasing function as a function of \(k\), \(\exists k^*\) such that \(BIC(k = c) - BIC(k = c-1) \leq 0 \forall 2 \leq c < k^{*}\) and   \(BIC(k = c) - BIC(k = c-1) \geq 0 \forall c \geq k^{*}\). Thus \(BIC\) is unimodal for a Gaussian Mixture Model as a function of \(k\).
+
+
+
+\end{document}
