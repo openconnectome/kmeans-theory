@@ -1,5 +1,8 @@
+import matplotlib.pyplot as plt
 import numpy as np
 from sklearn import mixture
+
+
 #woah sci kit learn is really cool
 
 np.random.seed(1)
@@ -38,6 +41,8 @@ for x in xrange(1,len(mleArr) - 1):
 
 print mleDifferences
 print verifyConcavity(mleDifferences)
+
+plt.plot([1,2], [3,4])
 
 
 
