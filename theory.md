@@ -21,48 +21,48 @@ defined as following:
 $BIC = -2ln(\hat{L}) + k(ln(n) - ln(2 \times \pi))$, where:
 
 $\hat{L}$ denotes the maximized value of the likelihood function for a model $M$, that is, $\hat{L} = p(x|\hat{\theta}, M)$. $\hat{L} \in \mathbb{R}$\
-$\theta$ denotes a vector of the parameters of the model, and $\hat{\theta}$ is the estimator for $\theta$. $\theta \in \mathbb{R}^k$
+
+$\theta$ denotes a vector of the parameters of the model, and $\hat{\theta}$ is the estimator for $\theta$. $\theta \in \mathbb{R}^2k + (\frac{(k+1)(k)}{2} - 1)$
+
 $k$ denotes the number of parameters to be estimated,
 $k \in \mathbb{Z}^{+}$
+
 $x$ is the observed data. $x \in \mathbb{R}^{n}$
-$n$ is the number of samples in $x$. $n \in \mathbb{R}$\
-**Definition 1.2**: We consider a less traditional definition for the
-term **unimodal**. A function $f(x)$ is considered to be unimodal if all
-local extrema of the function are absolute extrema of the function. More
-formally, this is:\
-- For $f(x) \in \mathbb{R}$, if $f'(x = x^{*}) = 0$, $f''(x= x^{*}) <0$,
-then ${\operatornamewithlimits{argmax}}_{x} f(x) = x^*$ - Similarly, for
+
+$n$ is the number of samples in $x$. $n \in \mathbb{R}$
+
+**Definition 1.2**: We consider a less traditional definition for the term *unimodal*. A function $f(x)$ is considered to be unimodal if all local extrema of the function are absolute extrema of the function. More
+formally, this is:
+
+- For $f(x) \in \mathbb{R}$, if $f'(x = x^{*}) = 0$, $f''(x= x^{*}) <0$, then ${\operatornamewithlimits{argmax}}_{x} f(x) = x^*$
+- Similarly, for
 $f(x) \in \mathbb{R}$, if $f'(x = x^{*}) = 0$, $f''(x= x^{*}) > 0$, then
 ${\operatornamewithlimits{argmin}}_{x} f(x) = x^{*}$
 
 **Definition 1.3**: A Gaussian mixture distribution can be written as
-follows:\
-$p(x) = \sum_{i=1}^{k} \pi_i N(x | \mu_i, \sigma_i)$, where\
-$0 \leq \pi_i \leq 1$, $\sum_{i=1}^k \pi_i$\
-$N(x | \mu_i, \sigma_i)$ is a normal distribution
-($N(x) = \frac{1}{\sigma \sqrt{2\pi}} e^{ - \frac{(x - \mu)^2}{2\sigma^2}}$)
-with mean $u_i$ and variance $\sigma_i$\
-We provide more background on Gaussian mixture models:\
-Suppose we introduce $z = \{z_1, ... z_k\} $, where $z_i$ is a Bernouli
-random variable such that\
-$z_i = 1$ with $P(z_i) = \pi_i$ and $z_i = 0$ otherwise. We use $z_i$ to
-“single out” the $i^{th}$ $N(x | \mu_i, \sigma_i)$. Because $\bm{z}$ is
-only equal to $1$ for one value in $[k]$, we can write
-$p(z) = \prod_{i=1}^k \pi_i^{z_i}$,
-$p(x | z_i = 1 ) = N(x | \mu_i, \sigma_i) = \prod_{i=1}^k N(x | \mu_i, \sigma_i)^{z_i}$
-and clearly
-$p(x) = \sum_z p(z) p(x | z) = \sum_{i=1}^k \pi_i N(x | \mu_i, \sigma_i)$
+follows:
 
-Furthermore, let us define the *responsibility* of $z_i$ as
-$\gamma(z_i) = \gamma(z_i = 1 | k) = \frac{p(z_i = 1)p(x| z_i = 1)}{ \sum_{j=1}^k p(z_j = 1) p(x | z_j = 1) } = \frac{\pi_i N(x | \mu_i, \sigma_i)}{\sum_{j=1}^k \pi_j N(x | \mu_j, \sigma_j)}$
-by Bayes’ theorem.\
-**Definition 1.4**: Given $\{\bm{x_1}, \dots, \bm{x_n} \} = {X}$, where
-${X}$ is independently and identically distributed, we define the
-*likelihood function* $L$ of ${X}$,
-$L = p( X | \pi, \mu, k) = \prod_{j=1}^n \sum_{i=1}^k \pi_i N(x_j | \mu_i, \sigma_i)$,
-and $ln(L) = \sum_{j=1}^n ln (\sum \pi_i N(x_j | \mu_i, \sigma_i) )$. We
-can maximize $L$ with respect to different parameters to attain
-$\hat{L}$, the *maximum-likelihood estimation (MLE)*.\
+$p(x) = \sum_{i=1}^{k} \pi_i N(x | \mu_i, \sigma_i)$, where:
+$0 \leq \pi_i \leq 1$, $\sum_{i=1}^k \pi_i$
+
+$N(x | \mu_i, \sigma_i)$ is a normal distribution
+($N(x) = \frac{1}{\sigma \sqrt{2\pi}} e^{ - \frac{(x - \mu)^2}{2\sigma^2}}$) with mean $u_i$ and variance $\sigma_i$
+
+We provide more background on Gaussian mixture models:
+
+Suppose we introduce $z = \{z_1, ... z_k\} $, where $z_i$ is a Bernouli random variable such that
+
+$z_i = 1$ with $P(z_i) = \pi_i$ and $z_i = 0$ otherwise. We use $z_i$ to “single out” the $i^{th}$ $N(x | \mu_i, \sigma_i)$. Because $\bm{z}$ is only equal to $1$ for one value in $[k]$, we can write $p(z) = \prod_{i=1}^k \pi_i^{z_i}$, $p(x | z_i = 1 ) = N(x | \mu_i, \sigma_i) = \prod_{i=1}^k N(x | \mu_i,\sigma_i)^{z_i}$ 
+
+and clearly $p(x) = \sum_z p(z) p(x | z) = \sum_{i=1}^k \pi_i N(x | \mu_i, \sigma_i)$
+
+Furthermore, let us define the *responsibility* of $z_i$ as $\gamma(z_i) = \gamma(z_i = 1 | k) = \frac{p(z_i = 1)p(x| z_i = 1)}{ \sum_{j=1}^k p(z_j = 1) p(x | z_j = 1) } = \frac{\pi_i N(x | \mu_i, \sigma_i)}{\sum_{j=1}^k \pi_j N(x | \mu_j, \sigma_j)}$
+by Bayes’ theorem.
+
+**Definition 1.4**: Given $\{\bm{x_1}, \dots, \bm{x_n}\} = {X}$, where ${X}$ is independently and identically distributed, we define the *likelihood function* $L$ of ${X}$, $L = p( X | \pi, \mu, k) = \prod_{j=1}^n \sum_{i=1}^k \pi_i N(x_j | \mu_i, \sigma_i)$, and $ln(L) = \sum_{j=1}^n ln (\sum \pi_i N(x_j | \mu_i, \sigma_i) )$. 
+
+We can maximize $L$ with respect to different parameters to attain $\hat{L}$, the *maximum-likelihood estimation (MLE)*.
+
 Note that there is no closed form solution for the MLE of of a GMM.
 
 **Theorem 1.1**: $\hat{L}(k = c+1) \geq \hat{L}(k = c) \forall c\geq 0$,
