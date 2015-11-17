@@ -65,8 +65,8 @@ We can maximize $L$ with respect to different parameters to attain $\hat{L}$, th
 
 Note that there is no closed form solution for the MLE of of a GMM.
 
-**Theorem 1.1**: $\hat{L}(k = c+1) \geq \hat{L}(k = c) \forall c\geq 0$,
-where $k$ again is the number of parameters to be estimated.\
+**Theorem 1.1**: $\hat{L}(k = c+1) \geq \hat{L}(k = c) \forall c\geq 0$, where $k$ again is the number of parameters to be estimated.
+
 **Proof**: We first seek to prove that $GMM_k \subset GMM_{k+1}$, where
 $GMM_i$ is the set of all Gaussian mixture models with $i$ Gaussians
 mixed. (Perhaps this part should be a lemma) Note that:\
