@@ -21,7 +21,7 @@ def verifyConcavity(arr):
 			return False
 	return True
 			
-
+numClusters = [i for i in range(1,10)]
 for x in xrange(1,10):
 	g = mixture.GMM(n_components=x)
 	# generate random observations with two modes centered on 0 and 100 
@@ -41,8 +41,28 @@ for x in xrange(1,len(mleArr) - 1):
 
 print mleDifferences
 print verifyConcavity(mleDifferences)
+#concavity isn't true for the MLE differences
 
-plt.plot([1,2], [3,4])
+plt.figure(1)
+plt.plot(numClusters, bic)
+plt.ylabel('BIC')
+plt.xlabel('Number of Clusters')
+plt.title('BIC plot')
+
+plt.figure(2)
+plt.plot(numClusters, mleArr)
+plt.ylabel('Maximum Likelihood Estimator')
+plt.xlabel('Number of Clusters')
+plt.title('MLE plot')
+# plt.show()
+
+plt.figure(3)
+plt.plot(numClusters[0:-2], mleDifferences, 'o')
+plt.title('MLE Differences')
+plt.ylabel('Difference in Maximum Likelihood Estimator')
+plt.xlabel('Number of Clusters')
+plt.show()
+
 
 
 
