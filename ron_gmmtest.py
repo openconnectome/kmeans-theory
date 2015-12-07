@@ -50,14 +50,13 @@ plt.plot(numClusters, mleArr)
 plt.ylabel('Maximum Likelihood Estimator')
 plt.xlabel('Number of Clusters')
 plt.title('MLE plot')
-# plt.show()
 
 plt.figure(3)
 plt.plot(numClusters[0:-2], mleDifferences, 'o')
 plt.title('MLE Differences')
 plt.ylabel('Difference in Maximum Likelihood Estimator')
 plt.xlabel('Number of Clusters')
-# plt.show()
+plt.show()
 
 
 
