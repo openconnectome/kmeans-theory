@@ -30,7 +30,6 @@ for x in xrange(1,10):
 	bic.append(g.bic(obs))
 
 print mleArr
-#why is the fit so good for 1 GMM?
 print bic
 
 for x in xrange(1,len(mleArr) - 1):
@@ -58,7 +57,7 @@ plt.plot(numClusters[0:-2], mleDifferences, 'o')
 plt.title('MLE Differences')
 plt.ylabel('Difference in Maximum Likelihood Estimator')
 plt.xlabel('Number of Clusters')
-plt.show()
+# plt.show()
 
 
 
