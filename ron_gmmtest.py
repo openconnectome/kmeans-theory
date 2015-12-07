@@ -2,9 +2,6 @@ import matplotlib.pyplot as plt
 import numpy as np
 from sklearn import mixture
 
-
-#woah sci kit learn is really cool
-
 np.random.seed(1)
 
 mleArr = []
@@ -41,7 +38,7 @@ for x in xrange(1,len(mleArr) - 1):
 
 print mleDifferences
 print verifyConcavity(mleDifferences)
-#concavity isn't true for the MLE differences
+#usually not true
 
 plt.figure(1)
 plt.plot(numClusters, bic)
